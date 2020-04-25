@@ -1,6 +1,7 @@
 package com.imooc.controller;
 
 import com.imooc.service.UserService;
+import com.imooc.utils.IMOOCJSONResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,20 +24,20 @@ public class PassportController {
     private UserService userService;
 
     @GetMapping("/usernameIsExist")
-    public HttpStatus usernameIsExist(@RequestParam String username) {
+    public IMOOCJSONResult usernameIsExist(@RequestParam String username) {
 
         /** 判断用户名非空 */
         if (StringUtils.isBlank(username)) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return IMOOCJSONResult.errorMsg("用户名不能为空");
         }
 
         /** 查找用户名是否存在 */
         boolean isExist = userService.queryUsernameIsExist(username);
         if (isExist) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return IMOOCJSONResult.errorMsg("用户吗已经存在");
         }
 
-        return HttpStatus.OK;
+        return IMOOCJSONResult.ok();
     }
 
 
