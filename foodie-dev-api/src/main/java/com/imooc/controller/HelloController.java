@@ -15,5 +15,5 @@ public class HelloController {
     @GetMapping("/hello")
     public Object hello() {
         return "Hello world !";
-    }
+    } 
 }
