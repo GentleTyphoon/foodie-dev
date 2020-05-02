@@ -23,4 +23,12 @@ public interface UserService {
      * @return
      */
     public Users createUser(UserBo userBo);
+
+    /**
+     * 判断用户名是否存在
+     * @param username
+     * @param password
+     * @return
+     */
+    public Users queryUserForLogin(String username, String password);
 }

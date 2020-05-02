@@ -1,13 +1,16 @@
 package com.imooc.controller;
 
+import com.imooc.pojo.Users;
 import com.imooc.pojo.bo.UserBo;
 import com.imooc.service.UserService;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 
 /**
@@ -75,6 +78,28 @@ public class PassportController {
         userService.createUser(userBo);
 
         return IMOOCJSONResult.ok();
+    }
+
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
+    @PostMapping("/login")
+    public IMOOCJSONResult login(@RequestBody UserBo userBo) throws Exception {
+
+        String username = userBo.getUsername();
+        String password = userBo.getPassword();
+
+        // 用户名或密码不能为空
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            return IMOOCJSONResult.errorMsg("用户名或密码不能为空");
+        }
+
+        //实现登陆
+        Users users = userService.queryUserForLogin(username, MD5Utils.getMD5Str(password));
+
+        if (users == null) {
+            return IMOOCJSONResult.errorMsg("用户名或密码不正确");
+        }
+
+        return IMOOCJSONResult.ok(users);
     }
 
 
