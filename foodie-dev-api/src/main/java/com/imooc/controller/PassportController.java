@@ -3,7 +3,9 @@ package com.imooc.controller;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.bo.UserBo;
 import com.imooc.service.UserService;
+import com.imooc.utils.CookieUtils;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.JsonUtils;
 import com.imooc.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -47,7 +51,9 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
-    public IMOOCJSONResult regist(@RequestBody UserBo userBo) {
+    public IMOOCJSONResult regist(@RequestBody UserBo userBo,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
 
         String username = userBo.getUsername();
         String password = userBo.getPassword();
@@ -75,14 +81,20 @@ public class PassportController {
         }
 
         /** 注册 */
-        userService.createUser(userBo);
+        Users user = userService.createUser(userBo);
+
+        CookieUtils.setCookie(request, response,
+                "user", JsonUtils.objectToJson(user), true );
 
         return IMOOCJSONResult.ok();
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
-    public IMOOCJSONResult login(@RequestBody UserBo userBo) throws Exception {
+    public IMOOCJSONResult login(@RequestBody UserBo userBo,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response
+    ) throws Exception {
 
         String username = userBo.getUsername();
         String password = userBo.getPassword();
@@ -92,15 +104,30 @@ public class PassportController {
             return IMOOCJSONResult.errorMsg("用户名或密码不能为空");
         }
 
-        //实现登陆
+        // 实现登陆
         Users users = userService.queryUserForLogin(username, MD5Utils.getMD5Str(password));
 
         if (users == null) {
             return IMOOCJSONResult.errorMsg("用户名或密码不正确");
         }
 
+        users = setNullProperty(users);
+
+        CookieUtils.setCookie(request, response,
+                "user", JsonUtils.objectToJson(users), true );
+
         return IMOOCJSONResult.ok(users);
     }
 
+
+    private Users setNullProperty(Users users) {
+        users.setPassword(null);
+        users.setMobile(null);
+        users.setEmail(null);
+        users.setCreatedTime(null);
+        users.setUpdatedTime(null);
+        users.setBirthday(null);
+        return users;
+    }
 
 }
