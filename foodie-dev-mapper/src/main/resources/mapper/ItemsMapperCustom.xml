@@ -10,11 +10,11 @@
         ic.created_time as createdTime,
         u.face as face,
         u.nickname as nickname
-    FROM item_comments ic
+    FROM items_comments ic
     LEFT JOIN users u ON ic.user_id = u.id
     WHERE ic.item_id = #{params.itemId}
       <if test="params.commentLevel != null and params.commentLevel != ''">
-          AND ic.comment_level = {params.commentLevel}
+          AND ic.comment_level = #{params.commentLevel}
       </if>
   </select>
 

@@ -6,6 +6,7 @@ import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
 import com.imooc.pojo.vo.CommentLevelCountsVO;
 import com.imooc.pojo.vo.ItemCommentVO;
+import com.imooc.utils.PagedGridResult;
 
 import java.util.List;
 
@@ -56,5 +57,6 @@ public interface ItemService {
      * 商品评价
      * @return
      */
-    public List<ItemCommentVO> queryPagedComment(String itemId, Integer level);
+    public PagedGridResult queryPagedComment(String itemId, Integer level,
+                                             Integer page, Integer pageSize);
 }

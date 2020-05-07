@@ -1,11 +1,14 @@
 package com.imooc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imooc.enums.CommentLevel;
 import com.imooc.mapper.*;
 import com.imooc.pojo.*;
 import com.imooc.pojo.vo.CommentLevelCountsVO;
 import com.imooc.pojo.vo.ItemCommentVO;
 import com.imooc.service.ItemService;
+import com.imooc.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -106,13 +109,30 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public List<ItemCommentVO> queryPagedComment(String itemId, Integer level) {
+    public PagedGridResult queryPagedComment(String itemId, Integer level, Integer page, Integer pageSize) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("itemId", itemId);
         map.put("commentLevel", level);
 
+        /** page: 第几页    pageSize: 每页显示条数*/
+        PageHelper.startPage(page, pageSize);
+
         List<ItemCommentVO> itemCommentVOS = itemsMapperCustom.queryItemComments(map);
-        return itemCommentVOS;
+
+        PagedGridResult grid = getPagedGridResult(page, itemCommentVOS);
+
+        return grid;
+    }
+
+    private PagedGridResult getPagedGridResult(Integer page, List<?> itemCommentVOS) {
+        PageInfo<?> pageList = new PageInfo<>(itemCommentVOS);
+        PagedGridResult grid = new PagedGridResult();
+
+        grid.setPage(page);
+        grid.setRows(itemCommentVOS);
+        grid.setTotal(pageList.getPages());
+        grid.setRecords(pageList.getTotal());
+        return grid;
     }
 }
