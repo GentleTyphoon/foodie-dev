@@ -6,6 +6,7 @@ import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
 import com.imooc.pojo.vo.CommentLevelCountsVO;
 import com.imooc.pojo.vo.ItemInfoVO;
+import com.imooc.pojo.vo.ShopcartVO;
 import com.imooc.service.ItemService;
 import com.imooc.utils.IMOOCJSONResult;
 import com.imooc.utils.PagedGridResult;
@@ -165,5 +166,21 @@ public class ItemsController extends BaseController {
 
         return IMOOCJSONResult.ok(grid);
     }
+
+    @ApiOperation(value = "根据商品规格IDS查询商品最新价格", notes = "刷新购物车中数据", httpMethod = "GET")
+    @GetMapping("/refresh")
+    public IMOOCJSONResult refresh(
+            @ApiParam(name = "itemSpecIds", value = "逗号分割的IDS", example = "1000,1001,1002", required = true)
+            @RequestParam String itemSpecIds) {
+
+        if (StringUtils.isBlank(itemSpecIds)) {
+            return IMOOCJSONResult.ok();
+        }
+
+        List<ShopcartVO> shopcartVOS = itemService.queryItemsBySpecIds(itemSpecIds);
+
+        return IMOOCJSONResult.ok(shopcartVOS);
+    }
+
 
 }
