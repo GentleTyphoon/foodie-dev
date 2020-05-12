@@ -26,4 +26,11 @@ public interface AddressService {
      * @param addressBO 用户地址BO
      */
     public void addNewUserAddress(AddressBO addressBO);
+
+    /**
+     * 修改收货地址
+     * @param addressBO
+     */
+    public void updateUserAddress(AddressBO addressBO);
+
 }
