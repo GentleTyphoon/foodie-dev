@@ -63,7 +63,7 @@ public class AddressServiceImpl implements AddressService {
         userAddressMapper.insert(userAddress);
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void updateUserAddress(AddressBO addressBO) {
 
@@ -76,5 +76,16 @@ public class AddressServiceImpl implements AddressService {
         userAddress.setUpdatedTime(new Date());
 
         userAddressMapper.updateByPrimaryKeySelective(userAddress);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteUserAddress(String userId, String addressId) {
+
+        UserAddress userAddress = new UserAddress();
+        userAddress.setUserId(userId);
+        userAddress.setId(addressId);
+
+        userAddressMapper.delete(userAddress);
     }
 }

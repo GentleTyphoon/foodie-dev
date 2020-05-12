@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -105,6 +102,19 @@ public class AddressController {
         }
 
         addressService.updateUserAddress(addressBO);
+
+        return IMOOCJSONResult.ok();
+    }
+
+    @ApiOperation(value = "删除用户地址", notes = "删除用户地址", httpMethod = "POST")
+    @PostMapping("/delete")
+    public IMOOCJSONResult delete(@RequestParam String userId, @RequestParam String addressId) {
+
+        if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
+            return IMOOCJSONResult.errorMsg("");
+        }
+
+        addressService.deleteUserAddress(userId, addressId);
 
         return IMOOCJSONResult.ok();
     }
