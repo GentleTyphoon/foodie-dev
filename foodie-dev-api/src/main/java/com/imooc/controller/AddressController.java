@@ -119,4 +119,17 @@ public class AddressController {
         return IMOOCJSONResult.ok();
     }
 
+    @ApiOperation(value = "设置默认收货地址", notes = "设置默认收货地址", httpMethod = "POST")
+    @PostMapping("/setDefault")
+    public IMOOCJSONResult setDefault(@RequestParam String userId, @RequestParam String addressId) {
+
+        if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
+            return IMOOCJSONResult.errorMsg("");
+        }
+
+        addressService.updateUserAddress2Default(userId, addressId);
+
+        return IMOOCJSONResult.ok();
+    }
+
 }

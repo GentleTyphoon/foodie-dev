@@ -1,6 +1,5 @@
 package com.imooc.service;
 
-import com.imooc.pojo.Carousel;
 import com.imooc.pojo.UserAddress;
 import com.imooc.pojo.bo.AddressBO;
 
@@ -35,9 +34,16 @@ public interface AddressService {
 
     /**
      * 根据用户ID和地址ID删除对应的地址信息
-     * @param userId
-     * @param addressId
+     * @param userId    用户ID
+     * @param addressId 地址主键
      */
     public void deleteUserAddress(String userId, String addressId);
+
+    /**
+     * 设置默认收货地址
+     * @param userId    用户ID
+     * @param addressId 地址主键
+     */
+    public void updateUserAddress2Default(String userId, String addressId);
 
 }

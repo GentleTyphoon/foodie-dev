@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.UserAddressMapper;
 import com.imooc.pojo.UserAddress;
 import com.imooc.pojo.bo.AddressBO;
@@ -88,4 +89,28 @@ public class AddressServiceImpl implements AddressService {
 
         userAddressMapper.delete(userAddress);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateUserAddress2Default(String userId, String addressId) {
+
+        /** 查找现存默认地址 -> 改为非默认 */
+        UserAddress queryUserAddress = new UserAddress();
+        queryUserAddress.setUserId(userId);
+        queryUserAddress.setIsDefault(YesOrNo.YES.type);
+        List<UserAddress> list = userAddressMapper.select(queryUserAddress);
+        for (UserAddress userAddress : list) {
+            userAddress.setIsDefault(YesOrNo.NO.type);
+            userAddressMapper.updateByPrimaryKeySelective(userAddress);
+        }
+
+
+        /** 根据ID修改为默认 */
+        UserAddress defaultUserAddress = new UserAddress();
+        defaultUserAddress.setIsDefault(YesOrNo.YES.type);
+        defaultUserAddress.setId(addressId);
+        defaultUserAddress.setUserId(userId);
+        userAddressMapper.updateByPrimaryKeySelective(defaultUserAddress);
+    }
+
 }
