@@ -12,6 +12,7 @@ public interface ItemsMapperCustom {
 
     /**
      * 商品评价
+     *
      * @param params
      * @return
      */
@@ -19,6 +20,7 @@ public interface ItemsMapperCustom {
 
     /**
      * 搜索商品列表
+     *
      * @param paramsMap
      * @return
      */
@@ -26,6 +28,7 @@ public interface ItemsMapperCustom {
 
     /**
      * 根据分类ID查询
+     *
      * @param paramsMap
      * @return
      */
@@ -33,8 +36,17 @@ public interface ItemsMapperCustom {
 
     /**
      * 刷新购物车
+     *
      * @param specIdsList
      * @return
      */
     public List<ShopcartVO> queryItemsBySpecIds(@Param("specIdsList") List<String> specIdsList);
+
+    /**
+     *  减库存
+     * @param specId    物品规格ID
+     * @param pendingCounts 减少的数量
+     * @return
+     */
+    public int decreaseItemSpecStock(@Param("specId") String specId, @Param("pendingCounts") int pendingCounts);
 }
