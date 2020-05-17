@@ -1,6 +1,6 @@
-package com.imooc.pojo.bo;
+package com.imooc.pojo.vo;
 
-public class  MerchantOrdersBO {
+public class MerchantOrdersVO {
 
     private String merchantOrderId;         // 商户订单号
     private String merchantUserId;          // 商户方的发起用户的用户主键id

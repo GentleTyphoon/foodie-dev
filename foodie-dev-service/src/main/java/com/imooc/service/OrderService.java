@@ -1,6 +1,7 @@
 package com.imooc.service;
 
 import com.imooc.pojo.bo.SubmitOrderBO;
+import com.imooc.pojo.vo.OrderVO;
 
 /**
  * @Author wuweifu
@@ -14,7 +15,7 @@ public interface OrderService {
      *  创建订单
      * @param submitOrderBO
      */
-    public String createOrder(SubmitOrderBO submitOrderBO);
+    public OrderVO createOrder(SubmitOrderBO submitOrderBO);
 
     /**
      * 修改订单状态

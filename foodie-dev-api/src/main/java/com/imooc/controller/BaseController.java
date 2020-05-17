@@ -16,4 +16,7 @@ public class BaseController {
     public static final Integer PAGE_SIZE = 20;
 
     public static final String FOODIE_SHOPCART = "shopcart";
+
+    /** 微信支付成功 -> 支付中心(payReturnUrl) -> 天天吃货后台(@PostMapping("/notifyMerchantOrderPaid")) */
+    String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
 }
