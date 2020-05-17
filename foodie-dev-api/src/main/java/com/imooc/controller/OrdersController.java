@@ -2,6 +2,7 @@ package com.imooc.controller;
 
 import com.imooc.enums.OrderStatusEnum;
 import com.imooc.enums.PayMethod;
+import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.bo.SubmitOrderBO;
 import com.imooc.pojo.vo.MerchantOrdersVO;
 import com.imooc.pojo.vo.OrderVO;
@@ -58,7 +59,7 @@ public class OrdersController extends BaseController {
 
         /** 3.向支付中心发送当前订单，用户保存支付中心的订单数据 */
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("imoocUserId","imooc");
         headers.add("password","imooc");
 
@@ -93,6 +94,16 @@ public class OrdersController extends BaseController {
         return HttpStatus.OK.value();
      }
 
+    /**
+     * 查询订单状态
+     * @param orderId   订单ID
+     * @return
+     */
+    @PostMapping("/getPaidOrderInfo")
+    public IMOOCJSONResult getPaidOrderInfo(@RequestParam String orderId) {
 
+        OrderStatus orderStatus = orderService.queryOrderStatusInfo(orderId);
+        return IMOOCJSONResult.ok(orderStatus);
+    }
 
 }
