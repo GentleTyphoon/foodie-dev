@@ -15,4 +15,11 @@ public interface OrderService {
      * @param submitOrderBO
      */
     public String createOrder(SubmitOrderBO submitOrderBO);
+
+    /**
+     * 修改订单状态
+     * @param orderId   order的ID
+     * @param orderStatus   订单状态枚举
+     */
+    public void updateOrderStatus(String orderId, Integer orderStatus);
 }
