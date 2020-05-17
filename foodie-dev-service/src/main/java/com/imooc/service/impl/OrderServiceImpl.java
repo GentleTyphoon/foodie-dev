@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
             orderItems.setItemName(items.getItemName());
             orderItems.setItemImg(imgUrl);
             orderItems.setBuyCounts(butCounts);
-            orderItems.setItemSpecId(itemSpecIds);
+            orderItems.setItemSpecId(specId);
             orderItems.setItemSpecName(itemsSpec.getName());
             orderItems.setPrice(itemsSpec.getPriceDiscount());
             orderItemsMapper.insert(orderItems);
@@ -136,9 +136,9 @@ public class OrderServiceImpl implements OrderService {
         merchantOrdersVO.setMerchantOrderId(orderId);
         merchantOrdersVO.setMerchantUserId(userId);
         merchantOrdersVO.setAmount(realPayAmount + postAmount);
-        merchantOrdersVO.setAmount(payMethod);
+        merchantOrdersVO.setPayMethod(payMethod);
 
-        /** 5. 构建自定义订单VO */
+        /** 5. 构建自定义订单VO -> 用于在controller请求支付中心 */
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersVO(merchantOrdersVO);

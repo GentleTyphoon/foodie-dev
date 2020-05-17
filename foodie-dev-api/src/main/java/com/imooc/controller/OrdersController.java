@@ -11,8 +11,9 @@ import com.imooc.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,10 +32,12 @@ public class OrdersController extends BaseController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @ApiOperation(value = "用户下订单", notes = "用户下订单", httpMethod = "POST")
     @PostMapping("/create")
     public IMOOCJSONResult list(@RequestBody SubmitOrderBO submitOrderBO, HttpServletRequest request, HttpServletResponse response) {
-
 
         if (!submitOrderBO.getPayMethod().equals(PayMethod.WEIXIN.type) &&
                 !submitOrderBO.getPayMethod().equals(PayMethod.ALIPAY.type)) {
@@ -46,19 +49,35 @@ public class OrdersController extends BaseController {
         String orderId = orderVO.getOrderId();
         MerchantOrdersVO merchantOrdersVO = orderVO.getMerchantOrdersVO();
         merchantOrdersVO.setReturnUrl(payReturnUrl);
+        // TODO 测试支付，暂时写为1分钱, 之后注释掉即可
+        merchantOrdersVO.setAmount(1);
 
         /** 2.创建订单以后 移除购物车中已结算（已提交）的商品 */
         // TODO 整合redis后，完善购物车中的已结算商品清除，并且同步到前端的cookie
         CookieUtils.setCookie(request, response, FOODIE_SHOPCART, "", true);
 
         /** 3.向支付中心发送当前订单，用户保存支付中心的订单数据 */
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("imoocUserId","imooc");
+        headers.add("password","imooc");
+
+        HttpEntity<MerchantOrdersVO> entity = new HttpEntity<>(merchantOrdersVO, headers);
+
+        ResponseEntity<IMOOCJSONResult> responseEntity = restTemplate.postForEntity(paymentUrl, entity,
+                IMOOCJSONResult.class);
+
+        IMOOCJSONResult result = responseEntity.getBody();
+        if (result.getStatus() != 200) {
+            return IMOOCJSONResult.errorMsg("支付中心订单创建失败");
+        }
 
 
         return IMOOCJSONResult.ok(orderId);
     }
 
     /**
-     * 回调接口
+     * 回调接口 -> 订单状态改为等待收货
      * @param merchantOrderId   order表的ID
      * @return
      * eg:http://localhost:8088/orders/notifyMerchantOrderPaid?merchantOrderId=20051710487920066560
