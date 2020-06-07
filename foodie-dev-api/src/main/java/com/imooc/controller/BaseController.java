@@ -18,7 +18,8 @@ public class BaseController {
     public static final String FOODIE_SHOPCART = "shopcart";
 
     /** 微信支付成功 -> 支付中心(payReturnUrl) -> 天天吃货后台(@PostMapping("/notifyMerchantOrderPaid")) */
-    String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
+//    String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
+    String payReturnUrl = "http://56sm9i.natappfree.cc/orders/notifyMerchantOrderPaid";
 
     /** 支付中心的调用地址 */
     String paymentUrl = "http://payment.t.mukewang.com/foodie-payment/payment/createMerchantOrder";

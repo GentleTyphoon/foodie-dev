@@ -32,3 +32,44 @@ gen
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+将删除 foodie-dev-api/.DS_Store
+将删除 foodie-dev-api/src/test/
+将删除 foodie-dev-api/target/classes/application.yml
+将删除 foodie-dev-api/target/classes/log4j.properties
+将删除 foodie-dev-api/target/classes/rebel.xml
+将删除 foodie-dev-api/target/generated-sources/
+将删除 foodie-dev-api/target/generated-test-sources/
+将删除 foodie-dev-api/target/maven-archiver/
+将删除 foodie-dev-api/target/maven-status/
+将删除 foodie-dev-api/target/test-classes/
+将删除 foodie-dev-common/src/test/
+将删除 foodie-dev-common/target/classes/rebel.xml
+将删除 foodie-dev-common/target/generated-sources/
+将删除 foodie-dev-common/target/generated-test-sources/
+将删除 foodie-dev-common/target/maven-archiver/
+将删除 foodie-dev-common/target/maven-status/
+将删除 foodie-dev-common/target/test-classes/
+将删除 foodie-dev-mapper/src/test/
+将删除 foodie-dev-mapper/target/classes/mapper/
+将删除 foodie-dev-mapper/target/classes/rebel.xml
+将删除 foodie-dev-mapper/target/generated-sources/
+将删除 foodie-dev-mapper/target/generated-test-sources/
+将删除 foodie-dev-mapper/target/maven-archiver/
+将删除 foodie-dev-mapper/target/maven-status/
+将删除 foodie-dev-mapper/target/test-classes/
+将删除 foodie-dev-pojo/src/test/
+将删除 foodie-dev-pojo/target/classes/rebel.xml
+将删除 foodie-dev-pojo/target/generated-sources/
+将删除 foodie-dev-pojo/target/generated-test-sources/
+将删除 foodie-dev-pojo/target/maven-archiver/
+将删除 foodie-dev-pojo/target/maven-status/
+将删除 foodie-dev-pojo/target/test-classes/
+将删除 foodie-dev-service/src/test/
+将删除 foodie-dev-service/target/classes/rebel.xml
+将删除 foodie-dev-service/target/generated-sources/
+将删除 foodie-dev-service/target/generated-test-sources/
+将删除 foodie-dev-service/target/maven-archiver/
+将删除 foodie-dev-service/target/maven-status/
+将删除 foodie-dev-service/target/test-classes/
+将删除 foodie-payment/target/
+将删除 src/

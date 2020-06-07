@@ -1,7 +1,7 @@
 package com.imooc.controller;
 
 import com.imooc.pojo.Users;
-import com.imooc.pojo.bo.UserBo;
+import com.imooc.pojo.bo.UserBO;
 import com.imooc.service.UserService;
 import com.imooc.utils.CookieUtils;
 import com.imooc.utils.IMOOCJSONResult;
@@ -51,7 +51,7 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
-    public IMOOCJSONResult regist(@RequestBody UserBo userBo,
+    public IMOOCJSONResult regist(@RequestBody UserBO userBo,
                                   HttpServletRequest request,
                                   HttpServletResponse response) {
 
@@ -94,7 +94,7 @@ public class PassportController {
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
-    public IMOOCJSONResult login(@RequestBody UserBo userBo,
+    public IMOOCJSONResult login(@RequestBody UserBO userBo,
                                  HttpServletRequest request,
                                  HttpServletResponse response
     ) throws Exception {

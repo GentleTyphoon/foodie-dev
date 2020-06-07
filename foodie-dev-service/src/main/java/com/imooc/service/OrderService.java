@@ -31,4 +31,9 @@ public interface OrderService {
      * @return
      */
     public OrderStatus queryOrderStatusInfo(String orderId);
+
+    /**
+     *  关闭超时为支付订单
+     */
+    public void closeOrder();
 }

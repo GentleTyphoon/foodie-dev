@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @Description: 前端传来的新建用户对象
  **/
 @ApiModel(value = "用户对象BO", description = "客户端传入的用户数据封装")
-public class UserBo {
+public class UserBO {
 
     @ApiModelProperty(value = "用户名", name = "username", example = "wwf", required = true)
     private String username;

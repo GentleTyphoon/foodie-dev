@@ -2,7 +2,7 @@ package com.imooc.service;
 
 
 import com.imooc.pojo.Users;
-import com.imooc.pojo.bo.UserBo;
+import com.imooc.pojo.bo.UserBO;
 
 /**
  * @author wuweifu
@@ -22,7 +22,7 @@ public interface UserService {
      * @param userBo 前端传来的UserBo对象
      * @return
      */
-    public Users createUser(UserBo userBo);
+    public Users createUser(UserBO userBo);
 
     /**
      * 判断用户名是否存在
