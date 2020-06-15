@@ -33,6 +33,6 @@ public class BaseController {
             File.separator + "Users" +
             File.separator + "wuweifu" +
             File.separator + "Documents" +
-            File.separator + "face";
+            File.separator + "";
 
 }
