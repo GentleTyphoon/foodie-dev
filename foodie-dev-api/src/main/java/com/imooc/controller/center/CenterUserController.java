@@ -6,6 +6,7 @@ import com.imooc.pojo.bo.center.CenterUserBO;
 import com.imooc.resource.FileUpload;
 import com.imooc.service.center.CenterUserService;
 import com.imooc.utils.CookieUtils;
+import com.imooc.utils.DateUtil;
 import com.imooc.utils.IMOOCJSONResult;
 import com.imooc.utils.JsonUtils;
 import io.swagger.annotations.Api;
@@ -150,6 +151,9 @@ public class CenterUserController extends BaseController {
                     /** 上传的头像最终保存的位置 */
                     String finalFacePath = fileSpace + uploadPathPrefix + File.separator + newFileName;
 
+                    /** 用于提供给web服务访问的地址 */
+                    uploadPathPrefix += ("/" + newFileName);
+
                     File outFile = new File(finalFacePath);
                     if (null != outFile.getParentFile()) {
                         /** 创建文件夹 */
@@ -180,7 +184,24 @@ public class CenterUserController extends BaseController {
             return IMOOCJSONResult.errorMsg("文件不能为空");
         }
 
+        /** 获取图片服务地址 */
+        String imageServerUrl = fileUpload.getImageServerUrl();
+
+        /** 由于浏览器可能存在缓存的情况， 所以加上时间戳，保存更新后的图片可以即使刷新 */
+        String finaUserFaceUrl = imageServerUrl + uploadPathPrefix
+                + "?t=" + DateUtil.getCurrentDateString(DateUtil.DATETIME_PATTERN);
+
+        /** 更新用户头像到数据库 */
+        Users users = centerUserService.updateUserFace(userId, finaUserFaceUrl);
+
+        setNullProperty(users);
+
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(users), true);
+
+        //TODO 后续要改， 增加令牌token, 会整合进redis，分布式会话
+
         return IMOOCJSONResult.ok();
-        }
+    }
 
 }
