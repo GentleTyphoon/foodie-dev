@@ -1,6 +1,6 @@
 package com.imooc.service.impl;
 
-import com.imooc.enums.PaymentStatus;
+import com.imooc.enmus.PaymentStatus;
 import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.OrdersMapper;
 import com.imooc.pojo.Orders;
