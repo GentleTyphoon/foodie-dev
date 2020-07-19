@@ -24,5 +24,11 @@ public interface MyOrdersService {
     );
 
 
+    /**
+     * @param orderId
+     * @Description: 订单状态 --> 商家发货
+     */
+    public void updateDeliverOrderStatus(String orderId);
+
 
 }
