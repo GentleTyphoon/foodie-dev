@@ -2,8 +2,6 @@ package com.imooc.controller.center;
 
 import com.imooc.controller.BaseController;
 import com.imooc.pojo.Orders;
-import com.imooc.pojo.Users;
-import com.imooc.service.center.CenterUserService;
 import com.imooc.service.center.MyOrdersService;
 import com.imooc.utils.IMOOCJSONResult;
 import com.imooc.utils.PagedGridResult;
@@ -93,12 +91,14 @@ public class MyOrdersController extends BaseController {
     ) throws Exception {
 
         IMOOCJSONResult result = checkUserOrder(orderId, userId);
-
         if (HttpStatus.OK.value() != result.getStatus()) {
             return result;
         }
 
-
+        boolean b = myOrdersService.updateReceiveOrderStatus(orderId);
+        if (!b) {
+            return IMOOCJSONResult.errorMsg("订单确认收货失败!");
+        }
 
         return IMOOCJSONResult.ok();
     }
@@ -121,12 +121,14 @@ public class MyOrdersController extends BaseController {
     ) throws Exception {
 
         IMOOCJSONResult result = checkUserOrder(orderId, userId);
-
         if (HttpStatus.OK.value() != result.getStatus()) {
             return result;
         }
 
-
+        boolean b = myOrdersService.deleteOrder(orderId, userId);
+        if (!b) {
+            return IMOOCJSONResult.errorMsg("订单删除失败!");
+        }
 
         return IMOOCJSONResult.ok();
     }
