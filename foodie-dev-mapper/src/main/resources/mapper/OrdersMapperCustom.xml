@@ -29,6 +29,7 @@
             od.pay_method as payMethod,
             od.real_pay_amount as realPayAmount,
             od.post_amount as postAmount,
+            od.is_comment as isComment,
 
             os.order_status as orderStatus,
 
@@ -57,6 +58,7 @@
             od.pay_method as payMethod,
             od.real_pay_amount as realPayAmount,
             od.post_amount as postAmount,
+            od.is_comment as isComment,
 
             os.order_status as orderStatus
 

@@ -1,5 +1,9 @@
 package com.imooc.controller;
 
+import com.imooc.pojo.Orders;
+import com.imooc.service.center.MyOrdersService;
+import com.imooc.utils.IMOOCJSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -34,5 +38,23 @@ public class BaseController {
             File.separator + "wuweifu" +
             File.separator + "Documents" +
             File.separator + "";
+
+    @Autowired
+    public MyOrdersService myOrdersService;
+
+    /**
+     * 验证用户和订单是否用关联，避免非法调用
+     * @return
+     */
+    public IMOOCJSONResult checkUserOrder(String orderId, String userId) {
+
+        Orders orders = myOrdersService.queryMyOrder(userId, orderId);
+
+        if (null == orders) {
+            return IMOOCJSONResult.errorMap("订单不存在!");
+        }
+
+        return IMOOCJSONResult.ok(orders);
+    }
 
 }

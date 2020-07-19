@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/myorders")
 public class MyOrdersController extends BaseController {
 
-    @Autowired
-    private MyOrdersService myOrdersService;
+//    @Autowired
+//    private MyOrdersService myOrdersService;
 
     @ApiOperation(value = "查询订单列表", notes = "查询订单列表", httpMethod = "POST")
     @PostMapping("/query")
@@ -137,15 +137,15 @@ public class MyOrdersController extends BaseController {
      * 验证用户和订单是否用关联，避免非法调用
      * @return
      */
-    private IMOOCJSONResult checkUserOrder(String orderId, String userId) {
-
-        Orders orders = myOrdersService.queryMyOrder(userId, orderId);
-
-        if (null == orders) {
-            return IMOOCJSONResult.errorMap("订单不存在!");
-        }
-
-        return IMOOCJSONResult.ok();
-    }
+//    private IMOOCJSONResult checkUserOrder(String orderId, String userId) {
+//
+//        Orders orders = myOrdersService.queryMyOrder(userId, orderId);
+//
+//        if (null == orders) {
+//            return IMOOCJSONResult.errorMap("订单不存在!");
+//        }
+//
+//        return IMOOCJSONResult.ok();
+//    }
 
 }
